@@ -9,7 +9,7 @@ interparkapi.py에는 다음 변수만 포함하면 됩니다.</br>
 key = [인터파크에서 발급받은 api키]
 ```
 발급 방법은 [여기][apitutorial] 를 참조하세요.
-
+## 모듈 설명
 ### bestseller.py
 ```
 collect_bestseller(tags: list)
