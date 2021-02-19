@@ -46,4 +46,3 @@ if __name__ == "__main__":
     for i in filenames:
         shutil.move("./" + i, "../frontapp/src/assets/" + i)
     print("연결 성공. 프로그램을 종료합니다.")
-
