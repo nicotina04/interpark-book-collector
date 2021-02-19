@@ -19,7 +19,7 @@ url += "&queryType=isbn"
 def read_excel():
     ret = pd.DataFrame()
     for i in glob.glob('goodscanlog/*.xlsx'):
-        df = pd.read_excel(i, skiprows=3, sheet_name='Sheet1').dropna(how='all').dropna(how='all', axis=1)
+        df = pd.read_excel(i, skiprows=3, sheet_name='Sheet1', nrows=25, dtype={'바코드': str}).dropna(how='all').dropna(how='all', axis=1)
         ret = ret.append(df, ignore_index=False)
 
     ret = ret.drop_duplicates(keep=False)
