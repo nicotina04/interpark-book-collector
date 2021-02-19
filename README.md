@@ -53,6 +53,9 @@ simplify_interpark()
 key: 도서의 id</br>
 value: 제목, 저자, 출판사, 도서의 인터파크 분류
 
+### showcase.py
+사내용 모듈입니다. 기타 사용자에게는 필요 없습니다.
+
 [apitutorial]: https://blog.soobinpark.com/166 "티스토리 블로그"
 [interparkdocu]: http://book.interpark.com/bookPark/html/bookpinion/api_booksearch.html "인터파크 api 문서"
 [nicotina]: https://github.com/nicotina04/interpark-book-category "인터파크 api json 데이터"
