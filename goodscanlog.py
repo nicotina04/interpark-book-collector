@@ -27,9 +27,8 @@ def read_excel():
     return ret
 
 
-def process_log():
+def process_log(log):
     ret = []
-    log = read_excel()
 
     for i in range(len(log)):
         tmp = dict()
@@ -45,18 +44,17 @@ def process_log():
     return ret
 
 
-def id_from_log():
-    res = read_excel()
+def id_from_log(panda):
     ret = set()
 
-    for i in range(len(res)):
-        if type(res.iloc[i, 0]) != str:
+    for i in range(len(panda)):
+        if type(panda.iloc[i, 0]) != str:
             break
 
-        if res.iloc[i, 1] is float:
-            ret.add(str(int(res.iloc[i, 1])))
+        if panda.iloc[i, 1] is float:
+            ret.add(str(int(panda.iloc[i, 1])))
         else:
-            ret.add(str(res.iloc[i, 1]))
+            ret.add(str(panda.iloc[i, 1]))
 
     return ret
 
@@ -78,10 +76,14 @@ def query_interpark(code: set):
     return mydb
 
 
+def write_log(log: list):
+    tmpstream = open('log.json', 'w')
+    tmpstream.write(json.dumps(log, indent='  '))
+    tmpstream.close()
+
+
 if __name__ == "__main__":
-    # barcode = id_from_log()
+    # barcode = id_from_log(read_excel())
     # tmp = query_interpark(barcode)
     # merge.merge_interpark(tmp)
-    f = open('log.json', 'w')
-    f.write(json.dumps(process_log(), indent='  '))
-    f.close()
+    write_log(process_log(read_excel()))

@@ -10,7 +10,7 @@ def merge_interpark(ar: list):
         mydb = sorted(mydb, key=lambda e: e['isbn'])
         f.close()
     except:
-        print("데이터베이스가 존재하지 않습니다.")
+        print("저장된 데이터베이스가 없습니다. 새로 생성합니다.")
 
     for i in ar:
         if len(mydb) == 0:
