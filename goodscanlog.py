@@ -8,6 +8,7 @@ import glob
 import xlrd
 import openpyxl
 import time
+import timeit
 
 
 url = "http://book.interpark.com/api/search.api?key="
@@ -19,7 +20,7 @@ url += "&queryType=isbn"
 def read_excel():
     ret = pd.DataFrame()
     for i in glob.glob('goodscanlog/*.xlsx'):
-        df = pd.read_excel(i, skiprows=3, sheet_name='Sheet1', nrows=25, dtype={'바코드': str}).dropna(how='all').dropna(how='all', axis=1)
+        df = pd.read_excel(i, header=3, nrows=22, sheet_name='Sheet1', dtype={'바코드': str})
         ret = ret.append(df, ignore_index=False)
 
     ret = ret.drop_duplicates(keep=False)
@@ -71,7 +72,7 @@ def query_interpark(code: set):
 
         for j in body['item']:
             mydb.append(j)
-        time.sleep(0.2)
+        time.sleep(0.15)
 
     return mydb
 

@@ -39,10 +39,10 @@ if __name__ == "__main__":
     print("가공된 데이터를 출력 및 저장합니다.")
     time.sleep(0.4)
     print(result_data)
-    goodscanlog.write_log(result_data)
 
-    print("가공된 데이터베이스를 관리자 프로그램과 연결합니다.")
+    print("시연 데이터를 출력했습니다.")
+    print("실제 db를 관리자 프로그램과 연동합니다.")
     filenames = ['isbn.json', 'log.json', 'interparkbookdb.json']
     for i in filenames:
-        shutil.move(i, "../frontapp/src/assets/" + i)
+        shutil.copyfile("./fulldata/" + i, "../frontapp/src/assets/" + i)
     print("연결 성공. 프로그램을 종료합니다.")
