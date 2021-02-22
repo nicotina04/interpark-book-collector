@@ -13,14 +13,13 @@ import timeit
 
 url = "http://book.interpark.com/api/search.api?key="
 url += park.key
-url += "&output=json"
-url += "&queryType=isbn"
+url += "&output=json" + "&queryType=all"
 
 
 def read_excel():
     ret = pd.DataFrame()
     for i in glob.glob('goodscanlog/*.xlsx'):
-        df = pd.read_excel(i, header=3, nrows=22, sheet_name='Sheet1', dtype={'바코드': str})
+        df = pd.read_excel(i, header=3, sheet_name='Sheet1', dtype={'바코드': str})
         ret = ret.append(df, ignore_index=False)
 
     ret = ret.drop_duplicates(keep=False)
@@ -52,27 +51,31 @@ def id_from_log(panda):
         if type(panda.iloc[i, 0]) != str:
             break
 
-        if panda.iloc[i, 1] is float:
-            ret.add(str(int(panda.iloc[i, 1])))
-        else:
-            ret.add(str(panda.iloc[i, 1]))
-
+        ret.add(panda.iloc[i, 1])
     return ret
 
 
 def query_interpark(code: set):
     mydb = []
 
-    for i in code:
-        response = requests.get(url + "&query=" + i)
+    for k in code:
+        baseurl = url + "&query=" + k
+
+        response = requests.get(baseurl)
+        time.sleep(0.15)
+
         body = json.loads(response.text)
+        if body['item'] == 0:
+            response = requests.get(baseurl + "&searchTarget=foreign")
+            time.sleep(0.15)
+            body = json.loads(response.text)
+
         if body['returnCode'] != "000":
-            print("검색한 id " + i + " 를 조회하는데 실패했습니다.")
+            print("검색한 id " + k + " 를 조회하는데 실패했습니다. 에러코드", body['returnCode'])
             continue
 
         for j in body['item']:
             mydb.append(j)
-        time.sleep(0.15)
 
     return mydb
 
